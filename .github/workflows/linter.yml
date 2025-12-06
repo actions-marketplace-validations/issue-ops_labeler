@@ -1,24 +1,31 @@
-name: Continuous Integration
+name: Lint Codebase
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
-  workflow_dispatch:
 
 permissions:
-  checks: write
   contents: read
+  issues: write
+  packages: read
+  pull-requests: write
+  statuses: write
 
 jobs:
-  continuous-integration:
-    name: Continuous Integration
+  lint:
+    name: Lint Codebase
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         id: setup-node
@@ -31,14 +38,8 @@ jobs:
         id: install
         run: npm ci
 
-      - name: Check Format
-        id: format-check
-        run: npm run format:check
-
-      - name: Lint
+      - name: Lint Codebase
         id: lint
-        run: npm run lint
-
-      - name: Test
-        id: test
-        run: npm run ci-test
+        uses: oxsecurity/megalinter/flavors/javascript@v9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
