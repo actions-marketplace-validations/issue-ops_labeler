@@ -41,10 +41,10 @@
     "outputName": "jest-junit.xml"
   },
   "dependencies": {
-    "@actions/core": "^3.0.0",
+    "@actions/core": "^3.0.1",
     "@actions/github": "^9.0.0",
     "@octokit/rest": "^22.0.1",
-    "minimatch": "^10.2.4"
+    "minimatch": "^10.2.5"
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.2",
